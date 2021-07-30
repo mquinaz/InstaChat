@@ -10,6 +10,8 @@ import nltk
 from nltk.stem import WordNetLemmatizer
 from tensorflow.keras.models import load_model
 
+last_message, last_response = '', ''
+
 #Moves cursor to text input box to respond
 def move_to_text_input(message):
     position = pt.locateOnScreen('images/photo.png', confidence=.7)
@@ -68,7 +70,7 @@ def predict_class(sentence):
     return return_list
 
 def get_response(intents_list, intents_json):
-    tag = intents_list[0]['intent']
+    tag = intents_list[0]['intents']
     list_of_intents = intents_json['intents']
     for i in list_of_intents:
         if i['tag'] == tag:
@@ -81,13 +83,10 @@ lemmatizer = WordNetLemmatizer()
 intents = json.loads(open('intents.json').read())
 words = pickle.load(open('words.pkl','rb') )
 classes = pickle.load(open('classes.pkl', 'rb') )
-model = load_model('chatbot_model.model')
-
-last_message, last_response = '', ''
+model = load_model('chatbot_model.h5')
 
 if __name__ == '__main__':
     sleep(2)
-    global last_message, last_response
     while True:
         try:
             current_message = get_messages()
@@ -100,9 +99,9 @@ if __name__ == '__main__':
                 # Bot response
                 if current_message != last_response:
                     response_Class = predict_class(current_message)
+                    print(response_Class)
                     response = get_response(response_Class, intents)
                     last_response = response
-                    print(f'Bot: {response}')
                     move_to_text_input(response)
             else:
                 print('No new messages ')
