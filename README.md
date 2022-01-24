@@ -1,16 +1,16 @@
 # InstaTalk
 
-## Train a Neural network with the way you text in Instagram, then use it as a chatbot.
+## Train a Neural network with your personality in Instagram, then use it as a chatbot.
 
 ![InstaTalk](https://github.com/mquinaz/InstaTalk/blob/main/images/instagramPhoto.png)
 
 ### Instructions
 
-- First under settings in instagram we can export all data. This will generate a Json that can be converted into a CSV (https://data.page/json/csv) that we rename to dataset.csv
+- First under settings in instagram we can export all data. This will generate a Json that can be converted into a CSV (https://data.page/json/csv) that we rename to dataset.csv.
 
 - Run **python3 intentGeneration.py** to create a intents.json file with patterns and responses. 
 
-- Then we train a Neural network with this intents.json file using **python3 training.py**.
+- Then we train a Neural network with this intents.json file running **python3 training.py**.
 
 - Finally run the main program **python3 main.py**.
 
