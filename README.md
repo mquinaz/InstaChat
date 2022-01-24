@@ -1,4 +1,4 @@
-# InstaChat
+# InstaTalk
 
 ## Train a Neural network with the way you text in Instagram, then use it as a chatbot.
 
