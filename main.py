@@ -24,19 +24,19 @@ def move_to_text_input(message):
 
 #Handles message retrieval
 def get_messages():
-    position = pt.locateOnScreen('images/smile.png', confidence=.9)
+    position = pt.locateOnScreen('images/smile.png', confidence=.6)
     pt.moveTo(position[0:2], duration=.5)
     pt.moveRel(50, -50, duration=.5)
     pt.click()
 
     #Click triple dots
-    position = pt.locateOnScreen('images/options.png', confidence=.9)
+    position = pt.locateOnScreen('images/options.png', confidence=.6)
     pt.moveTo(position[0:2], duration=.5)
     pt.click()
 
     #Click on copy message
     sleep(.5)
-    position = pt.locateOnScreen('images/copy.png', confidence=.8)
+    position = pt.locateOnScreen('images/copy.png', confidence=.6)
     pt.moveTo(position[0] + 10, position[1] + 15, duration=.5)
     pt.click()
 
@@ -72,6 +72,7 @@ def predict_class(sentence):
 def get_response(intents_list, intents_json):
     tag = intents_list[0]['intents']
     list_of_intents = intents_json['intents']
+
     for i in list_of_intents:
         if i['tag'] == tag:
             result = random.choice(i['responses'])
@@ -80,18 +81,17 @@ def get_response(intents_list, intents_json):
 
 
 lemmatizer = WordNetLemmatizer()
-intents = json.loads(open('intents.json').read())
+intents = json.loads(open('intentExample.json').read())
 words = pickle.load(open('words.pkl','rb') )
 classes = pickle.load(open('classes.pkl', 'rb') )
-model = load_model('chatbot_model.h5')
+model = load_model('chatbot_modelNew.h5')
 
 if __name__ == '__main__':
-    sleep(2)
+    sleep(3)
     while True:
         try:
             current_message = get_messages()
             print(current_message)
-
             if current_message != last_message:
                 last_message = current_message
                 print(f'Last copied message: {current_message}')
@@ -105,7 +105,7 @@ if __name__ == '__main__':
                     move_to_text_input(response)
             else:
                 print('No new messages ')
-            sleep(8)
+            sleep(4)
         except Exception as e:
             print(f'Exception {e}')
             sleep(8)

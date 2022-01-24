@@ -7,8 +7,10 @@ target_Name = "Laura  Munhoz ⚓"#input()
 
 flag = 0
 count = 0
-dictAuxFile = {}
 listDict = []
+dictAuxFile = {}
+listTargetwords = []
+listResponses = []
 
 with open('dataset.csv') as csvfile:
     reader = csv.DictReader(csvfile)
@@ -17,30 +19,34 @@ with open('dataset.csv') as csvfile:
         if text == "":
             continue
 
-        listTargetwords = []
-        listResponses = []
         if(row['messages__sender_name'] == my_name):
-            print(text)
-            if flag == 1:
+            if flag >= 1:
                 listResponses.append(text)
                 flag = 2
         else:
             if(flag > 1):
                 flag = 0
                 count += 1
+                dictAuxFile = {}
                 dictAuxFile["tag"] = str(count)
                 dictAuxFile["patterns"] = listTargetwords
                 dictAuxFile["responses"] = listResponses
+                listTargetwords = []
+                listResponses = []
+
+                print("################")
                 listDict.append(dictAuxFile)
-            else:
+                print(dictAuxFile)
+            if(flag <= 1):
                 flag = 1
                 listTargetwords.append(text)
-                print(text)
 
 
+
+print(listDict)
 
 fileIntent = {"intents":listDict}
-
+print(fileIntent)
 # Serializing json
 json_object = json.dumps(fileIntent, indent=1)
 
