@@ -51,5 +51,5 @@ print(fileIntent)
 json_object = json.dumps(fileIntent, indent=1)
 
 # Writing to sample.json
-with open("intentExample.json", "w") as outfile:
+with open("intents.json", "w") as outfile:
     outfile.write(json_object)

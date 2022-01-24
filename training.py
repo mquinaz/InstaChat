@@ -11,7 +11,7 @@ from tensorflow.keras.optimizers import SGD
 
 lemmatizer = WordNetLemmatizer()
 
-intents =  json.loads(open('intentExample.json').read())
+intents =  json.loads(open('intents.json').read())
 
 words = []
 classes = []
@@ -66,4 +66,4 @@ model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy
 
 
 hist = model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
-model.save('chatbot_modelNew.h5', hist)
+model.save('chatbot_model.h5', hist)

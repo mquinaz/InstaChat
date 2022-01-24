@@ -14,7 +14,7 @@ last_message, last_response = '', ''
 
 #Moves cursor to text input box to respond
 def move_to_text_input(message):
-    position = pt.locateOnScreen('images/photo.png', confidence=.7)
+    position = pt.locateOnScreen('images/photo.png', confidence=.4)
     pt.moveTo(position[0:2], duration=.5)
     pt.moveRel(-100, 20, duration=.5)
     pt.doubleClick(interval=.3)
@@ -60,7 +60,7 @@ def bag_of_words(sentence):
 def predict_class(sentence):
     bow = bag_of_words(sentence)
     res = model.predict(np.array([bow]))[0]
-    ERROR_THRESHOLD = 0.25
+    ERROR_THRESHOLD = 0.01
     results = [[i,r] for i, r in enumerate(res) if r > ERROR_THRESHOLD]
 
     results.sort(key=lambda x: x[1], reverse=True)
@@ -77,14 +77,15 @@ def get_response(intents_list, intents_json):
         if i['tag'] == tag:
             result = random.choice(i['responses'])
             break
+
     return result
 
 
 lemmatizer = WordNetLemmatizer()
-intents = json.loads(open('intentExample.json').read())
+intents = json.loads(open('intents.json').read())
 words = pickle.load(open('words.pkl','rb') )
 classes = pickle.load(open('classes.pkl', 'rb') )
-model = load_model('chatbot_modelNew.h5')
+model = load_model('chatbot_model.h5')
 
 if __name__ == '__main__':
     sleep(3)
